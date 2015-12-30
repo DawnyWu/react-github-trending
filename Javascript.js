@@ -6,33 +6,31 @@ class Javascript extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      language: this.props.params.language,
       repos: []
     }
   }
 
-  componentDidMount(){
-    this.init()
+  componentWillMount(){
+    this.init(this.props.params.language)
   }
 
   componentWillReceiveProps(nextProps){
-    this.init();
-  }
+    this.init(nextProps.params.language);
+    console.log('will receive language:' + nextProps.params.language)
+  } 
 
-  init(){
-    getItems()
+  init(language){
+    getItems(language)
          .then(function (data) {
-          console.log(data.items)
            this.setState({
+              language: language,
               repos: data.items
-          }) 
+          })
         }.bind(this))
   }
 
   render(){
-    const repos = this.state.repos.map(function (repo, index) {
-      <div>{repo.description}{repo.full_name}</div>
-    })
-    const a = this.state.repos
     return(
       <div>
         <div className='explore-marketing-header'>

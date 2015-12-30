@@ -1,11 +1,12 @@
 import axios from 'axios'
-
-function getRepos(){
-    return axios.get('https://api.github.com/search/repositories?q=react+language:javascript&sort=stars&order=desc')
+//search language not right, param language not right
+function getRepos(language){
+    console.log('search language:'+ language)
+    return axios.get(`https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc`)
   }
   
-export default function getItems(){
-    return axios.all([getRepos()]).then(function (attr) {
+export default function getItems(language){
+    return axios.all([getRepos(language)]).then(function (attr) {
       return {items: attr[0].data.items}
     })
   }
