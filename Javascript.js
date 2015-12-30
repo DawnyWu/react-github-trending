@@ -1,7 +1,7 @@
 import React from 'react'
 import getItems from './utils/helpers';
 import ReposList from './ReposList'
-
+import { Link } from 'react-router'
 class Javascript extends React.Component {
   constructor(props){
     super(props);
@@ -22,15 +22,18 @@ class Javascript extends React.Component {
 
   init(language){
     getItems(language)
-         .then(function (data) {
-           this.setState({
-              language: language,
-              repos: data.items
-          })
-        }.bind(this))
+    .then(function (data) {
+      this.setState({
+        language: language,
+        repos: data.items
+      })
+    }.bind(this))
   }
 
   render(){
+    const activeJavascript = this.props.params.language == 'javascript' ? 'active' : ''
+    const activeRuby = this.props.params.language == 'ruby' ? 'active' : ''
+    const activePython = this.props.params.language == 'python' ? 'active' : ''
     return(
       <div>
         <div className='explore-marketing-header'>
@@ -40,6 +43,14 @@ class Javascript extends React.Component {
         <div className="col-md-8">
           <ReposList repos={this.state.repos}/>
         </div>
+        <div className="col-md-4">
+          <ul className="nav nav-pills nav-stacked">
+            <li role="presentation" className={activeJavascript}><Link to='/trending/javascript'>Javascript</Link></li>
+            <li role="presentation" className={activeRuby}><Link to='/trending/ruby'>ruby</Link></li>
+            <li role="presentation" className={activePython}><Link to='/trending/python'>python</Link></li>
+          </ul>         
+        </div>
+
       </div>
     )
   }
