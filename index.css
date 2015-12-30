@@ -1,0 +1,17 @@
+.explore-marketing-header {
+  margin: 10px auto 30px;
+  text-align: center;
+}
+.lead {
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: 300;
+    color: #555;
+}
+.repo-list-item {
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    list-style: none;
+    border-bottom: 1px solid #eee;
+}
