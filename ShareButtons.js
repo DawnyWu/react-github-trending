@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import _ from 'lodash'
+// var css = require("./share.scss");
+import css from './css/share.scss'
 
 const propTypes = {
   url: PropTypes.string,
@@ -10,7 +12,7 @@ const propTypes = {
 };
 
 function getMetaContentByName(name) {
-    return (document.getElementsByName(name)[0] || 0).content;
+  return (document.getElementsByName(name)[0] || 0).content;
 }
 
 // var site = getMetaContentByName('site') || getMetaContentByName('Site') || document.title;
@@ -66,14 +68,13 @@ class ShareButtons extends React.Component {
     var href = `http://shuo.douban.com/!service/share?href=${url}&name=${title}&text=${description}&image=${image}&starid=0&aid=0&style=11`
     console.log(href)
     
-    var links = _.map(sites, function (site) {
-      return templates[site]
-    })
     
     var html = _.map(sites, function (site) {
-      return (<a href={templates[site]} target="_blank"> {site} </a>
+      var classNmae = `fa fa-3x fa-${site}` 
+      return (<div className="social-share"><a className="icon-tencent" href={templates[site]} target="_blank">{site}</a></div>
         )
     })
+
     return(
       <div>
         {html}

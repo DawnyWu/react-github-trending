@@ -23,7 +23,7 @@ class Main extends React.Component {
 
         </nav>
         <div className="container">
-          <ShareButtons />
+          <ShareButtons sites = {["qzone", "weibo", "google", "twitter"]} />
           {this.props.children}
         </div>
       </div>
