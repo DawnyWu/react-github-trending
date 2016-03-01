@@ -2,6 +2,8 @@ import React from 'react'
 import getItems from './utils/helpers';
 import ReposList from './ReposList'
 import { Link } from 'react-router'
+import { Pagination } from 'react-bootstrap';
+
 class Javascript extends React.Component {
   constructor(props){
     super(props);
@@ -17,7 +19,6 @@ class Javascript extends React.Component {
 
   componentWillReceiveProps(nextProps){
     this.init(nextProps.params.language);
-    console.log('will receive language:' + nextProps.params.language)
   } 
 
   init(language){
@@ -42,6 +43,11 @@ class Javascript extends React.Component {
         </div>
         <div className="col-md-8">
           <ReposList repos={this.state.repos}/>
+          <Pagination
+            bsSize="large"
+            items={10}
+            activePage={99}
+            onSelect={this.handleSelect} />          
         </div>
         <div className="col-md-4">
           <ul className="nav nav-pills nav-stacked">

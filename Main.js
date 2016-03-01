@@ -1,5 +1,7 @@
 import React from 'react'
+import ShareButtons from './ShareButtons'
 import { Link } from 'react-router'
+
 class Main extends React.Component {
   render(){
     return(
@@ -21,6 +23,7 @@ class Main extends React.Component {
 
         </nav>
         <div className="container">
+          <ShareButtons />
           {this.props.children}
         </div>
       </div>
