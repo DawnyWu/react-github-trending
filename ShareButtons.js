@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react'
 import _ from 'lodash'
-// var css = require("./share.scss");
 import css from './css/share.scss'
 
 const propTypes = {
@@ -40,15 +39,16 @@ const defaultProps = {
 class ShareButtons extends React.Component {
 
   render(){
-    var url = this.props.url
-    var title = this.props.title
-    var description = this.props.description
-    var image = this.props.image
-    var site = this.props.site
+    // summary 和 description是一样的
     var sites = this.props.sites
-    var origin = this.props.origin
-    var summary = this.props.summary
-    var source = this.props.source
+    var url = encodeURIComponent(this.props.url)
+    var title = encodeURIComponent(this.props.title)
+    var description = encodeURIComponent(this.props.description)
+    var image = encodeURIComponent(this.props.image)
+    var site = encodeURIComponent(this.props.site)
+    var origin = encodeURIComponent(this.props.origin)
+    var summary = encodeURIComponent(this.props.summary)
+    var source = encodeURIComponent(this.props.source)
 
     //  TODO: params需要处理，My Title有空格的这种不行的
     const templates = {
@@ -65,18 +65,14 @@ class ShareButtons extends React.Component {
       google: `https://plus.google.com/share?url=${url}`
     };
 
-    var href = `http://shuo.douban.com/!service/share?href=${url}&name=${title}&text=${description}&image=${image}&starid=0&aid=0&style=11`
-    console.log(href)
-    
-    
     var html = _.map(sites, function (site) {
-      var classNmae = `fa fa-3x fa-${site}` 
-      return (<div className="social-share"><a className="icon-tencent" href={templates[site]} target="_blank">{site}</a></div>
+      var className = `icon-${site} social-share-icon`
+      return (<a className={className} href={templates[site]} target="_blank"></a>
         )
     })
 
     return(
-      <div>
+      <div className="social-share">
         {html}
       </div>
     )
