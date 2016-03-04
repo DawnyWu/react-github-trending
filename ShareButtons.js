@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import _ from 'lodash'
 import css from './css/share.scss'
+import QRCode from 'qrcode.react'
 
 const propTypes = {
   url: PropTypes.string,
@@ -9,10 +10,6 @@ const propTypes = {
   image: PropTypes.string,
   sites: PropTypes.array,
 };
-
-function getMetaContentByName(name) {
-  return (document.getElementsByName(name)[0] || 0).content;
-}
 
 // var site = getMetaContentByName('site') || getMetaContentByName('Site') || document.title;
 // var title = getMetaContentByName('title') || getMetaContentByName('Title') || document.title;
@@ -32,9 +29,10 @@ const defaultProps = {
   image: image,
   site: "baidu.com",
   sites: ["douban", "qq"],
+  wechatQrcodeTitle: '微信扫一扫：分享',
+  // wechatQrcodeHelper: '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>',
+  wechatQrcodeHelper: '微信里点“发现”，扫一下,二维码便可将本文分享至朋友圈。',
 };
-
-
 
 class ShareButtons extends React.Component {
 
@@ -49,6 +47,8 @@ class ShareButtons extends React.Component {
     var origin = encodeURIComponent(this.props.origin)
     var summary = encodeURIComponent(this.props.summary)
     var source = encodeURIComponent(this.props.source)
+    var wechatQrcodeTitle = this.props.wechatQrcodeTitle
+    var wechatQrcodeHelper = this.props.wechatQrcodeHelper
 
     //  TODO: params需要处理，My Title有空格的这种不行的
     const templates = {
@@ -66,11 +66,27 @@ class ShareButtons extends React.Component {
     };
 
     var html = _.map(sites, function (site) {
-      var className = `icon-${site} social-share-icon`
-      return (<a className={className} href={templates[site]} target="_blank"></a>
+      if(site === "wechat"){
+        var doc = <div className='wechat-qrcode'>
+                    <h4>{wechatQrcodeTitle}</h4>
+                    <div className='qrcode'>
+                      <QRCode value="http://google.com" size={100} />
+                    </div>
+                    <div className='help'>
+                      <p>{wechatQrcodeHelper}</p>
+                    </div>
+                  </div>
+        return (
+          <a className='social-share-icon icon-wechat' target='_blank' href='javascript:'>
+            {doc}
+          </a>
         )
+      }else{
+        var className = `icon-${site} social-share-icon`
+        return (<a className={className} href={templates[site]} target="_blank"></a>
+        )
+      }
     })
-
     return(
       <div className="social-share">
         {html}
